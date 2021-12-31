@@ -1,2 +1,2 @@
 # Calculator
-the classic four-function calculator 
+The classic four-function calculator.

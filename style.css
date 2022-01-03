@@ -1,0 +1,86 @@
+@font-face {
+   src: url(fonts/IBMPlexMono-Regular.ttf);
+   font-family:IBMPlexMono;
+}
+
+body{
+  display:flex;
+  justify-content:center;
+}
+#grid-container{
+    display:grid;
+    grid-template-columns: auto auto auto auto auto;
+    width:500px;
+    height:90vh;
+    border:4px solid;
+    border-radius:6px;
+    padding: 12px;
+    gap:10px;
+    background-color: rgb(226, 226, 226);
+}
+
+.grid-item{
+    background-color:rgb(220, 220, 255);
+    border:4px solid rgb(80, 80, 255);
+    border-radius:10px;
+    display:flex;
+    flex-shrink:2;
+    justify-content: center;
+    align-items: center;
+    font-family:IBMPlexMono;
+    font-size: 30px;
+}
+
+#answer{
+  grid-column-start:1;
+  grid-column-end:6;
+  font-size: 60px;
+  justify-content: flex-end;
+  padding-right:20px;
+  background-color: rgb(255, 255, 255);
+  border-color:rgb(60, 60, 60);
+  overflow-x: hidden;
+}
+
+#undo{
+  grid-column-start:1;
+  grid-column-end:3;
+}
+
+#redo{
+  grid-column-start:3;
+  grid-column-end:5;
+}
+
+#undo, #redo, #clear{
+  background-color: rgb(190, 190, 255);
+}
+
+#plus{
+  grid-column-start:4;
+  grid-row-start:5;
+  grid-row-end:7;
+}
+
+#plus, #minus, #multiply, #divide, #square-root, #percent, #sign{
+  background-color: rgb(255, 206, 143);
+  border-color: rgb(245, 107, 1);
+}
+
+#undo, #redo, #clear, #one, #two, #three, #four, #five, #six, #seven, #eight, #nine, #zero, #decimal, #equals, #plus, #minus, #multiply, #divide, #square-root, #percent, #sign{
+-webkit-user-select: none;
+-khtml-user-select: none;
+-webkit-touch-callout : none;
+-moz-user-select: none;
+-o-user-select: none;
+user-select: none;
+}
+
+#undo:active, #redo:active, #clear:active, #one:active, #two:active, #three:active, #four:active, #five:active, #six:active, #seven:active, #eight:active, #nine:active, #zero:active, #decimal:active, #equals:active, #plus:active, #minus:active, #multiply:active, #divide:active, #square-root:active, #percent:active, #sign:active{
+    opacity:.6;
+}
+
+@keyframes button {
+  from {opacity: .6;}
+  to {opacity: 1;}
+}

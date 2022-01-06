@@ -3,16 +3,47 @@ answer.innerText = "0";
 let display = "";
 let secondNumber = null;
 let nextNumber = false;
+let isDecimal = false;
 let nextFunc = "";
+let history = [];
+let historyIndex = 1;
 
-const clear = document.getElementById("clear");
-clear.addEventListener('click', () => {
+document.getElementById("clear").addEventListener('click', () => {
     answer.innerText = "0";
     display = "";
     secondNumber = null;
     nextNumber = false;
+    isDecimal = false;
     nextFunc = "";
+    history = [];
+    historyIndex = 0;
 });
+
+history[0] = [answer.innerText, display, secondNumber, nextNumber, isDecimal, nextFunc];
+document.getElementById("grid-container").addEventListener('click', function(e) {
+    if(e.target.id == "undo") {
+        return;
+    }
+    historyIndex++;
+    history[historyIndex] = [answer.innerText, display, secondNumber, nextNumber, isDecimal, nextFunc];
+    console.table(history);
+});
+
+document.getElementById("undo").addEventListener('click', () => {
+    historyIndex-=1;
+    undo(history[historyIndex]);
+})
+function undo(snapshot) {
+    if(snapshot === undefined) {
+        return;
+    }
+    answer.innerText = snapshot[0];
+    display = snapshot[1];
+    secondNumber = snapshot[2];
+    nextNumber = snapshot[3];
+    isDecimal = snapshot[4];
+    nextFunc = snapshot[5];
+}
 
 const numbers = [
     document.getElementById("zero"),
@@ -31,8 +62,9 @@ numbers.forEach((number) => {
         if(nextNumber == false) {
             display += numbers.indexOf(number)+"";
             answer.innerText = display;
+            tooLong();
         }
-        else{
+        else {
             secondNumber = parseFloat(display);
             display = numbers.indexOf(number);
             answer.innerText = display;
@@ -41,16 +73,32 @@ numbers.forEach((number) => {
     })
 });
 
+function tooLong() {
+    if ((display + "").length > 13) {
+        display = (display + "").substring(0, 13);
+        answer.innerText = display;
+    }
+}
+
+const squareRoot = document.getElementById("square-root");
+const percent = document.getElementById("percent");
+const sign = document.getElementById("sign");
 const plus = document.getElementById("plus");
 const minus = document.getElementById("minus");
 const multiply = document.getElementById("multiply");
 const divide = document.getElementById("divide");
-const squareRoot = document.getElementById("square-root");
-const percent = document.getElementById("percent");
-const sign = document.getElementById("sign");
 const equals = document.getElementById("equals");
+const decimal = document.getElementById("decimal");
 
-
+squareRoot.addEventListener('click', () => {
+    evaluate("sqrt");
+});
+percent.addEventListener('click', () => {
+    evaluate("%");
+});
+sign.addEventListener('click', () => {
+    evaluate("sign");
+});
 plus.addEventListener('click', () => {
     evaluate("+");
 });
@@ -63,30 +111,37 @@ multiply.addEventListener('click', () => {
 divide.addEventListener('click', () => {
     evaluate("/");
 });
-squareRoot.addEventListener('click', () => {
-    evaluate("sqrt");
-});
-percent.addEventListener('click', () => {
-    evaluate("%");
-});
-sign.addEventListener('click', () => {
-    evaluate("sign");
-});
-equals.addEventListener('click', () =>{
+equals.addEventListener('click', () => {
     evaluate("");
 });
-
+decimal.addEventListener('click', () => {
+    if(!isDecimal) {
+        if(nextNumber == true) {
+            secondNumber = parseFloat(display);
+            display = ".";
+            answer.innerText = display;
+            nextNumber = false;
+        } else {
+            display += ".";
+        answer.innerText = display;
+        isDecimal = true;  
+        }
+    }
+});
 
 function evaluate(currentFunc) {
     if(currentFunc == "sqrt") {
-        display = Math.sqrt(parseFloat(display));
-        answer.innerText = display;
-    }
-    else if(currentFunc == "%") {
+        if(parseFloat(display) >= 0) {
+            display = Math.sqrt(parseFloat(display));
+            answer.innerText = display;  
+        } else {
+            display = "):";
+            answer.innerText = display;
+        }
+    } else if(currentFunc == "%") {
         display *= .01;
         answer.innerText = display;
-    }
-    else if(currentFunc == "sign") {
+    } else if(currentFunc == "sign") {
         display *= -1;
         answer.innerText = display;
     }
@@ -94,16 +149,13 @@ function evaluate(currentFunc) {
         if(nextFunc === "+") {
             display = secondNumber + parseFloat(display);
             answer.innerText = display;
-        }
-        else if(nextFunc === "-") {
+        } else if(nextFunc === "-") {
             display = secondNumber - parseFloat(display);
             answer.innerText = display;
-        }
-        else if(nextFunc === "*") {
+        } else if(nextFunc === "*") {
             display = secondNumber * parseFloat(display);
             answer.innerText = display;
-        }
-        else if(nextFunc === "/") {
+        } else if(nextFunc === "/") {
             if(parseFloat(display) != 0) {
                 display = secondNumber / parseFloat(display);
                 answer.innerText = display;
@@ -113,10 +165,11 @@ function evaluate(currentFunc) {
             }
         }
         secondNumber = null;
-    }
-    if(display == "") {
+    } if(display == "") {
         display = 0;
     }
+    tooLong();
     nextNumber = true;
     nextFunc = currentFunc;
+    isDecimal = false;
 }

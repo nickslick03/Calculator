@@ -6,7 +6,7 @@ let nextNumber = false;
 let isDecimal = false;
 let nextFunc = "";
 let history = [];
-let historyIndex = 1;
+let historyIndex = 0;
 
 document.getElementById("clear").addEventListener('click', () => {
     answer.innerText = "0";
@@ -17,23 +17,40 @@ document.getElementById("clear").addEventListener('click', () => {
     nextFunc = "";
     history = [];
     historyIndex = 0;
+    history[0] = [answer.innerText, display, secondNumber, nextNumber, isDecimal, nextFunc];
 });
 
 history[0] = [answer.innerText, display, secondNumber, nextNumber, isDecimal, nextFunc];
 document.getElementById("grid-container").addEventListener('click', function(e) {
-    if(e.target.id == "undo") {
+    if(e.target.id == "undo" || e.target.id == "redo" || e.target.id == "clear") {
         return;
+    }
+    if(history.length - 1 != historyIndex) {
+        history.splice(historyIndex+1);
     }
     historyIndex++;
     history[historyIndex] = [answer.innerText, display, secondNumber, nextNumber, isDecimal, nextFunc];
+    console.clear();
     console.table(history);
+    console.log(history.length);
+    console.log(historyIndex);
 });
 
 document.getElementById("undo").addEventListener('click', () => {
-    historyIndex-=1;
-    undo(history[historyIndex]);
+    if(historyIndex == 0) {
+        return;
+    }
+    historyIndex -= 1;
+    undoOrRedo(history[historyIndex]);
 })
-function undo(snapshot) {
+document.getElementById("redo").addEventListener('click', () =>{
+    if(history.length - 1 <= historyIndex) {
+        return;
+    }
+    historyIndex += 1;
+    undoOrRedo(history[historyIndex]);
+})
+function undoOrRedo(snapshot) {
     if(snapshot === undefined) {
         return;
     }

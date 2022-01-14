@@ -22,6 +22,7 @@ body{
 .grid-item{
     background-color:rgb(220, 220, 255);
     border:4px solid rgb(80, 80, 255);
+    box-shadow:5px 5px 1px gray;
     border-radius:10px;
     display:flex;
     flex-shrink:2;
@@ -39,6 +40,7 @@ body{
   padding-right:13px;
   background-color: rgb(255, 255, 255);
   border-color:rgb(60, 60, 60);
+  box-shadow:inset 8px 8px 2px rgb(207, 207, 207);
   overflow-x: hidden;
 }
 
@@ -78,9 +80,5 @@ user-select: none;
 
 #undo:active, #redo:active, #clear:active, #one:active, #two:active, #three:active, #four:active, #five:active, #six:active, #seven:active, #eight:active, #nine:active, #zero:active, #decimal:active, #equals:active, #plus:active, #minus:active, #multiply:active, #divide:active, #square-root:active, #percent:active, #sign:active{
     opacity:.6;
-}
-
-@keyframes button {
-  from {opacity: .6;}
-  to {opacity: 1;}
+    box-shadow:3px 3px 1px gray;
 }

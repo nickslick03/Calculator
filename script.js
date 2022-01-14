@@ -131,6 +131,8 @@ document.addEventListener('keydown', (e) => {
     didKeyPressedMatter = true;
     switch(e.key) {
         case "ArrowLeft":
+        case "Delete":
+        case "Backspace":
             if(historyIndex == 0) {
                 return;
             }

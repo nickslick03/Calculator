@@ -5,7 +5,10 @@
 
 body{
   display:flex;
-  justify-content:center;
+  align-items: center;
+  flex-direction: column;
+  gap:10px;
+  font-family:IBMPlexMono;
 }
 #grid-container{
     display:grid;
@@ -28,7 +31,7 @@ body{
     flex-shrink:2;
     justify-content: center;
     align-items: center;
-    font-family:IBMPlexMono;
+    
     font-size: 30px;
 }
 
@@ -81,4 +84,18 @@ user-select: none;
 #undo:active, #redo:active, #clear:active, #one:active, #two:active, #three:active, #four:active, #five:active, #six:active, #seven:active, #eight:active, #nine:active, #zero:active, #decimal:active, #equals:active, #plus:active, #minus:active, #multiply:active, #divide:active, #square-root:active, #percent:active, #sign:active{
     opacity:.6;
     box-shadow:3px 3px 1px gray;
+}
+
+#footer{
+  display: flex;
+  justify-content: center;
+}
+#footer-link{
+  color:rgb(31, 82, 177);
+}
+a{
+  text-decoration:none;
+}
+a:hover{
+  color: black;
 }

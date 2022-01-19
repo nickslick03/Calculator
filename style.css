@@ -22,6 +22,12 @@ body{
     background-color: rgb(226, 226, 226);
 }
 
+@media (max-width: 500px) {
+  #grid-container{
+    width:90vw;
+  } 
+}
+
 .grid-item{
     background-color:rgb(220, 220, 255);
     border:4px solid rgb(80, 80, 255);
